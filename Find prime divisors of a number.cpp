@@ -1,3 +1,4 @@
+// ConsoleApplication1.cpp : This file contains the 'main' function. Program execution begins and ends there.
 #include <iostream>
 #include <string>
 #include <array>
@@ -19,11 +20,15 @@ void primedivisorfinder(int64_t range, int64_t number, int64_t targetNumber)
         }
 
     }
+    
 
     if (restZero == 2)
     {
         primes.push_back(number);
+        
     }
+
+    
 
     for (int64_t number : primes)
     {
@@ -35,7 +40,7 @@ void primedivisorfinder(int64_t range, int64_t number, int64_t targetNumber)
     }
 
 
-    for (int64_t PrimesNew1 : primesNew )
+    for (int64_t PrimesNew1 : primesNew)
     {
         std::cout << PrimesNew1 << "\n";
     }
@@ -53,7 +58,7 @@ void program()
         std::cout << "Invalid number, please try again!";
     }
 
-    for (int64_t number = 0; number < std::sqrt(numberTarget); number++)
+    for (int64_t number = 0; number <= numberTarget; number++)
     {
         primedivisorfinder(number, number, numberTarget);
     }
