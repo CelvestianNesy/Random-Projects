@@ -6,12 +6,12 @@ std::vector<std::vector<char>> graphDrawer(int width, int height,char style, std
 {
 	for (int y = 0; y < height; y++) //Generates new empty vectors.
 	{
-		graph.push_back({style});
+		graph.push_back({});
 	}
 
 	for (int y = 0; y < height; y++)
 	{
-		for (int x = 0; x < width-1; x++)   //Generates width by pushing char into an empty vectors first. 
+		for (int x = 0; x < width; x++)   //Generates width by pushing char into an empty vector first. 
 		{
 			graph[y].push_back({style});  //At graph[y], put our char in. 
 		}
@@ -40,22 +40,22 @@ public:
 	int x2 = {};
 	int y2 = {};
 	
-	int derivative()
+	int slope()
 	{
-		int derivative = (y2 - y1) / (x2 - x1);
-		return derivative;
+		int slope = (y2 - y1) / (x2 - x1); 
+		return slope;
 	}
 	
-	int Moffset(int derivative)
+	int Moffset(int slope)
 	{
 
-		int m = y1 - derivative * (x1);
+		int m = y1 - slope * (x1);  //Basically, where the function cuts the y axis.
 		return m;
 	}
 
 	int deltaX()
 	{
-		int delta = (x2 - x1);
+		int delta = (x2 - x1); 
 		return delta;
 	}
 
@@ -65,12 +65,12 @@ public:
 int main()
 {
 
-	std::vector<std::vector<char>> graph = graphDrawer(30,10,'.');
+	std::vector<std::vector<char>> graph = graphDrawer(3,3,'.');
 
 	line lineA = { 0,4,1,4};
 	
 	
-	std::cout << lineA.Moffset(lineA.derivative());
+	
 
 	
 
