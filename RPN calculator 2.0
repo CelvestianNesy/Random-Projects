@@ -1,0 +1,210 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>    
+
+template<typename T>
+std::ostream& operator<< (std::ostream& out, std::vector<T> vec)
+{
+    out << "[";
+    for (const T item : vec)
+    {
+    out << item;
+    } 
+    out << "]";
+    return out;
+}
+
+std::vector<char> inputcleaner(std::vector<char>& incput)
+{
+    std::vector<char> cinput;
+    int counter = 0;
+    for (char character : incput)
+    {
+        if (character == ' ')
+        {
+            counter +=1;
+        }
+        else
+        {
+            counter = 0;
+        }
+        if (counter <= 1)
+        {
+        cinput.push_back(character);
+        }
+    }
+    if (cinput[cinput.size()-2] == ' ')
+    {
+      cinput.erase(cinput.begin()+(cinput.size()-2));
+    }
+    return cinput;
+}
+
+auto inputgenerator()
+{
+    int index = 0;
+    std::vector<char> incput;
+    std::string strinput; 
+    std::cout << "Calculate: ";
+    std::getline(std::cin>>std::ws ,strinput); 
+    for (char character : strinput)
+    {
+        incput.push_back(character);
+    }
+    std::vector<char> cinput = inputcleaner(incput);
+    
+    return cinput;
+}
+
+bool errorchecker(std::vector<char> cinput)
+{
+    int opcount = 0;
+    for (char character : cinput)
+    {
+    switch(character)
+    {
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+            opcount += 1;
+            break;
+        
+        case ' ':
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+            break;
+        
+        default:
+            std::cout << "Error: Invalid character/operator.\n";
+            return true;
+    }
+    }
+    if (opcount > 1 or opcount == 0)
+    {
+    std::cout << "Error: Invalid amount of operators.\n";
+    return true;
+    }
+    else
+    {
+    return false;
+    }
+}
+ bool opcheck(char op)
+ {
+    switch(op)
+    {
+    case '+':
+    case '-':
+    case '*':
+    case '/':
+    case '%':
+        return false;
+    default:
+        return true;
+    }
+ }
+
+void calculator(std::vector<int>& numbers,char op)
+{
+    double result = 0;
+     
+    for (int index = 0 ; index < numbers.size(); index++)
+    {
+        if (index == 0)
+        {
+            result = numbers[index];
+            continue;
+        }
+    
+        switch(op)
+        {
+        case '+':
+        result += numbers[index];
+        break;
+        
+        case '-':
+        result -= numbers[index];
+        break;
+        
+        case '*':
+        result *= numbers[index];
+        break;
+        
+        case '/':
+        result /= numbers[index];
+        break;
+        }
+        
+    }
+    
+    std::cout << "result: " <<  result;
+}
+
+
+
+void inputprocessor(std::vector<char>& cinput)
+{
+    std::vector<std::string> numbers;
+    std::vector<int> numbersstorage;
+    
+    std::string digitsaved = "";
+    std::string digitstr = "";
+    
+    for (char character : cinput)
+    {
+        int digit = character - '0' ;
+        if (character != ' ' and character != cinput[cinput.size()-1])
+        {
+            digitstr = std::to_string(digit);
+            digitsaved += digitstr;
+        }
+        if (character == ' ' or character == cinput[cinput.size()-1])
+        {
+            numbers.push_back(digitsaved);
+            digitsaved = "";
+        }
+    }
+    
+   for (std::string number : numbers)
+    {
+        int num = 0;
+        num = std::stoi(number);
+       numbersstorage.push_back(num);
+    }
+    
+    calculator(numbersstorage,cinput[cinput.size()-1]);
+    
+}
+
+int main()
+{
+    while (true)
+    {
+    auto cinput = inputgenerator();
+    bool error = errorchecker(cinput);
+    
+    if (error == true)
+    {
+        continue;
+    }
+    else
+    {
+    inputprocessor(cinput);
+    std::cout << "\n";
+    }
+    
+    }
+   return 0;
+}
+
+    
